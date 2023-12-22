@@ -1,0 +1,777 @@
+{
+	"suiteName" : "PartSalesInvoicing",
+	"suiteDescription" : "Part Sales Invoicing",
+	"testCases": [
+		{
+			"testNode": {
+				"testCaseID": "PSI_004",
+				"testCaseTitle": "Verify Login with Valid Credentials",
+				"testCaseDescription": "Infor LN Login",
+				"dependsOn": "",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{ "login": { "login_username":"", "login_password":"","url":"$url", "testStepDescription" : "Navigate to the url"}},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"h4Text":{"xpathparams":["ERP Calibre Devlopment server"], "continueTestNodes" : false, "testStepDescription" : "Validate the Image is present"}}									
+								]
+							}
+						]
+					},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"inputWithType":{"xpathparams":["email"], "continueTestNodes" : false, "testStepDescription" : "Validate username is present"}}									
+								]
+							}
+						]
+					},
+					{"typeTextWithTabKey" : [{"inputWithType":{"xpathparams": ["email"], "value" : "$username", "testStepDescription" : "Enter username"}}]},
+					{"clickElement" : [{"inputWithType":{"xpathparams": ["submit"],"ignore" : "yes", "waitTime" : "2", "testStepDescription" : "Click on Next button"}}]},
+					{"typeTextWithTabKey" : [{"inputWithType":{"xpathparams": ["password"], "value" : "$password", "testStepDescription" : "Enter password"}}]},
+					{"clickElement" : [{"inputWithType":{"xpathparams": ["submit"],"ignore" : "yes", "waitTime" : "2", "testStepDescription" : "Click on Sign In button"}}]},	
+					{"clickElement" : [{"submitButton":{"xpathparams": [],"ignore" : "yes", "waitTime" : "5", "testStepDescription" : "Click on Sign In button"}}]},
+					{ "sleep": { "sec":"2000"}},
+					{"frameSwitch" : {"frame" : "m-app-frame", "by" : "class", "testStepDescription" : "Switch to IFrame"}},
+					{ "validate": 
+						[ 
+							{ "isDisplayed":
+								[
+									{"labelwithText":{"xpathparams":["Menu"], "continueTestNodes" : false, "testStepDescription" : "Validate Infor Menu is displayed"}}									
+								]
+							}
+						]
+					},
+					{ "sleep": { "sec":"2000"}}
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_005",
+				"testCaseTitle": "Navigate to Part Sales Order",
+				"testCaseDescription": "Navigate to Part Sales Order",
+				"dependsOn": "PSI_004",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Parts Management"], "testStepDescription" : "Click on Parts Management Menu"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"subMenuItem":{"xpathparams":["Parts Management", "Sales Control"], "continueTestNodes" : false, "testStepDescription" : "Validate Sales Control is visible"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Parts Management", "Sales Control"], "testStepDescription" : "Click on Sales Control under Parts Management"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Parts Management", "Sales Control","Sales Orders"], "testStepDescription" : "Click on Sales Orders"}}]},
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Parts Management", "Sales Control","Sales Orders","Parts Sales Orders"], "testStepDescription" : "Click on Sales Orders"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Parts Sales Orders"], "continueTestNodes" : false, "testStepDescription" : "Validate Part Sales Order Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"buttonAddnewHeader1":{"xpathparams": ["Parts Sales Orders"], "testStepDescription" : "Click on New button "}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Part Sales Orders"], "continueTestNodes" : false, "testStepDescription" : "Validate Part Sales Orders Tab is displayed"}}									
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_006",
+				"testCaseTitle": "Enter the values for creating Part Sales Order",
+				"testCaseDescription": "Enter the values for creating Part Sales Order",
+				"dependsOn": "PSI_005",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"inputFields":{"xpathparams": ["Customer Data","Customer:"],"testStepDescription" :"Click on Customer Input"}}]},
+					{"clickElement" : [{"searchButtonInputFields":{"xpathparams": ["Customer Data","Customer"],"testStepDescription" : "Click on Search Button to search the Bussiness Partner"}}]},
+					{"typeTextWithTabKey" : [{"textinputfieldSeriesSearchIndex":{"xpathparams": ["1"], "value" : "$activeBP", "testStepDescription" : "Enter Active BP value"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"windowOkButton":{"xpathparams": [],"testStepDescription" : "Click on Ok Button"}}]},
+					{ "keyBoardEvent": { "tab":"2"}},
+					{"clickElement" : [{"inputFields":{"xpathparams": ["Order Details","Demand Warehouse:"],"testStepDescription" :"Click on Demand Warehouse Input"}}]},
+					{"clickElement" : [{"searchButtonInputFields":{"xpathparams": ["Order Details","Demand Warehouse"],"testStepDescription" : "Click on Search Button to search the Demand Warehouse Input"}}]},
+					{"typeTextWithTabKey" : [{"textinputfieldSeriesSearchIndex":{"xpathparams": ["1"], "value" : "$demandWarehouse", "testStepDescription" : "Enter Active BP value"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"windowOkButton":{"xpathparams": [],"testStepDescription" : "Click on Ok Button"}}]},
+					{"clickElement" : [{"stdSave":{"xpathparams": ["Part Sales Orders"],"testStepDescription" :"Click on add new button"}}]},
+					{"getText": [{"inputFields":{"xpathparams": ["Order Details","Sales Order:"], "varName" : "salesOrderNumber","testStepDescription":"Get the genrated sales order number and save"}}]}
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_007",
+				"testCaseTitle": "Add 4 Line Items",
+				"testCaseDescription": "Enter 4 Line Items",
+				"dependsOn": "PSI_006",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"buttonAddnewLine":{"xpathparams": ["Part Sales Orders"],"testStepDescription" :"Click on new line button"}}]},
+					{"clickElement" : [{"partSalesOrderItemInput":{"xpathparams": ["0"],"testStepDescription" : "Click on first line input"}}]},
+					{"clickElement" : [{"partSalesOrderItemInputSearch":{"xpathparams": ["0"],"testStepDescription" : "Click on first line input search button"}}]},
+					{"typeTextWithTabKey" : [{"textinputfieldSeriesSearchIndex":{"xpathparams": ["2"], "value" : "$validItem.1", "testStepDescription" : "Enter first item"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"windowOkButton":{"xpathparams": [],"testStepDescription" : "Click on Ok Button"}}]},
+					{ "keyBoardEvent": { "tab":"3"}},
+					{"clickElement" : [{"partSalesOrderQuantityInput":{"xpathparams": ["0"],"testStepDescription" : "Click on quantity input"}}]},
+					{"typeTextWithTabKey" : [{"partSalesOrderQuantityInput":{"xpathparams": ["0"], "value" : "$quantity.1", "testStepDescription" : "Enter first item"}}]},
+					{ "keyBoardEvent": { "tab":"1"}},
+					{"clickElement" : [{"buttonAddnewLine":{"xpathparams": ["Part Sales Orders"],"testStepDescription" :"Click on new line button"}}]},
+					{"clickElement" : [{"partSalesOrderItemInput":{"xpathparams": ["1"],"testStepDescription" : "Click on first line input"}}]},
+					{"clickElement" : [{"partSalesOrderItemInputSearch":{"xpathparams": ["1"],"testStepDescription" : "Click on first line input search button"}}]},
+					{"typeTextWithTabKey" : [{"textinputfieldSeriesSearchIndex":{"xpathparams": ["2"], "value" : "$validItem.2", "testStepDescription" : "Enter first item"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"windowOkButton":{"xpathparams": [],"testStepDescription" : "Click on Ok Button"}}]},
+					{ "keyBoardEvent": { "tab":"3"}},
+					{"clickElement" : [{"partSalesOrderQuantityInput":{"xpathparams": ["1"],"testStepDescription" : "Click on quantity input"}}]},
+					{"typeTextWithTabKey" : [{"partSalesOrderQuantityInput":{"xpathparams": ["1"], "value" : "$quantity.2", "testStepDescription" : "Enter first item"}}]},
+					{ "keyBoardEvent": { "tab":"1"}},
+					{"clickElement" : [{"buttonAddnewLine":{"xpathparams": ["Part Sales Orders"],"testStepDescription" :"Click on new line button"}}]},
+					{"clickElement" : [{"partSalesOrderItemInput":{"xpathparams": ["2"],"testStepDescription" : "Click on first line input"}}]},
+					{"clickElement" : [{"partSalesOrderItemInputSearch":{"xpathparams": ["2"],"testStepDescription" : "Click on first line input search button"}}]},
+					{"typeTextWithTabKey" : [{"textinputfieldSeriesSearchIndex":{"xpathparams": ["2"], "value" : "$validItem.3", "testStepDescription" : "Enter first item"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"windowOkButton":{"xpathparams": [],"testStepDescription" : "Click on Ok Button"}}]},
+					{ "keyBoardEvent": { "tab":"3"}},
+					{"clickElement" : [{"partSalesOrderQuantityInput":{"xpathparams": ["2"],"testStepDescription" : "Click on quantity input"}}]},
+					{"typeTextWithTabKey" : [{"partSalesOrderQuantityInput":{"xpathparams": ["2"], "value" : "$quantity.3", "testStepDescription" : "Enter first item"}}]},
+					{ "keyBoardEvent": { "tab":"1"}},
+					{"clickElement" : [{"buttonAddnewLine":{"xpathparams": ["Part Sales Orders"],"testStepDescription" :"Click on new line button"}}]},
+					{"clickElement" : [{"partSalesOrderItemInput":{"xpathparams": ["3"],"testStepDescription" : "Click on first line input"}}]},
+					{"clickElement" : [{"partSalesOrderItemInputSearch":{"xpathparams": ["3"],"testStepDescription" : "Click on first line input search button"}}]},
+					{"typeTextWithTabKey" : [{"textinputfieldSeriesSearchIndex":{"xpathparams": ["2"], "value" : "$validItem.4", "testStepDescription" : "Enter first item"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"windowOkButton":{"xpathparams": [],"testStepDescription" : "Click on Ok Button"}}]},
+					{ "keyBoardEvent": { "tab":"3"}},
+					{"clickElement" : [{"partSalesOrderQuantityInput":{"xpathparams": ["3"],"testStepDescription" : "Click on quantity input"}}]},
+					{"typeTextWithTabKey" : [{"partSalesOrderQuantityInput":{"xpathparams": ["3"], "value" : "$quantity.4", "testStepDescription" : "Enter first item"}}]},
+					{ "keyBoardEvent": { "tab":"1"}}
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_008",
+				"testCaseTitle": "Pick and Pack",
+				"testCaseDescription": "Click on Pick and Pack menu",
+				"dependsOn": "PSI_007",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"pickAndPack":{"xpathparams": [],"testStepDescription" :"Click on pick and pack button"}}]},
+					{"clickElement" : [{"closeBtn":{"xpathparams": [], "ignore" : "yes", "waitTime" : "5","testStepDescription":"Click on Close button"}}]},
+					{ "toArray": { "varName": "validItem","object":"orderedQunatity","testStepDescription" : "Save ordered quantity to object"}},
+					{ "save": { "varName": "ptr","object":"orderedQunatity", "assign" : "0", "testStepDescription" : "Save line items to object"}}
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_009",
+				"testCaseTitle": "Compare the shippe quantity for each line",
+				"testCaseDescription": "Compare the shippe quantity for each line",
+				"dependsOn": "PSI_008",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"getText": [{"partSalesOrderQuantityInput":{"xpathparams": ["#ptr"], "varName" : "orderedQuantity","testStepDescription":"Get the orderd quantity and save"}}]},
+					{"getText": [{"shippedQuantity":{"xpathparams": ["#ptr"], "varName" : "shippedQuantity","testStepDescription":"Get the shipped quqntity and save"}}]},
+					{"compareString": { "actual":"orderedQuantity" ,"expected":"shippedQuantity","testStepDescription":"Compare the quantity"}}
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_010",
+				"testCaseTitle": "Loop through test cases for comaprison",
+				"testCaseDescription": "Loop through test cases for comparison",
+				"dependsOn": "PSI_009",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{ "save": { "varName": "ptr", "assign" : "inc", "testStepDescription" : "Save line items to object"}},
+					{"loop" : {"loop" : { "from":"PSI_009", "to":"PSI_010", "object" : "orderedQunatity","varName": "ptr"}, "testStepDescription" : "Loop through test cases"}}
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_011",
+				"testCaseTitle": "Navigate to Integration Transactions bt Project/Order",
+				"testCaseDescription": "Navigate to Integration Transactions bt Project/Order",
+				"dependsOn": "PSI_010",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Parts Management", "Sales Control","Sales Orders"], "testStepDescription" : "Click on Sales Orders"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Parts Management", "Sales Control"], "testStepDescription" : "Click on Sales Control under Parts Management"}}]},
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Parts Management"], "testStepDescription" : "Click on Parts Management Menu"}}]},
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Finance & Accounting"], "testStepDescription" : "Click on Finance & Accounting Menu"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"subMenuItem":{"xpathparams":["Finance & Accounting", "Integration with Other Modules"], "continueTestNodes" : false, "testStepDescription" : "Validate Integration with Other Modules is visible"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules"], "testStepDescription" : "Click on Integration with Other Modules"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules","Integration Inquiries & Reports"], "testStepDescription" : "Click on Integration Inquiries & Reports"}}]},
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules","Integration Inquiries & Reports","Integration Transactions by Project/Order"], "testStepDescription" : "Click on Integration Transactions by Project/Order"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Integration Transactions by Project/Order"], "continueTestNodes" : false, "testStepDescription" : "Validate Integration Transactions by Project/Order Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"searchButton":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on serach button on the header"}}]},
+					{"clickElement" : [{"originalCompany":{"xpathparams": [], "testStepDescription" : "Click on original company"}}]},
+					{"typeTextWithTabKey" : [{"originalCompany":{"xpathparams": [], "value" : "$company", "testStepDescription" : "Enter company"}}]},
+					{"clickElement" : [{"transactionOriginDropDown":{"xpathparams": [], "testStepDescription" : "Click on drop Down"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["Parts (Sales)"], "testStepDescription" : "Click on Part Sales"}}]},
+					{"clickElement" : [{"orderNoIntegration":{"xpathparams": [], "testStepDescription" : "Click on order no"}}]},
+					{"typeTextWithTabKey" : [{"orderNoIntegration":{"xpathparams": [], "value" : "#salesOrderNumber", "testStepDescription" : "Enter sales order number"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["OK"], "testStepDescription" : "Click on OK"}}]},
+					{"clickElement" : [{"scrollUp":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on scroll up button"}}]},
+					{"addElementsToArray" : [{"integrationTransactionAmount":{"xpathparams": [],"varName":"validItem","object":"integrationTransactionAmount","alternate":"yes", "testStepDescription" : "Get the integration transaction amounts"}}]}
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_012",
+				"testCaseTitle": "Naviagte to Inventory Receipt Transactions",
+				"testCaseDescription": "Naviagte to Inventory Receipt Transactions",
+				"dependsOn": "PSI_011",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules","Integration Inquiries & Reports"], "testStepDescription" : "Click on Integration Inquiries & Reports"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules"], "testStepDescription" : "Click on Integration with Other Modules"}}]},
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Finance & Accounting"], "testStepDescription" : "Click on Finance & Accounting Menu"}}]},
+					
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Parts Management"], "testStepDescription" : "Click on Parts Management Menu"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Parts Management", "Warehouse Management"], "testStepDescription" : "Click on Warehouse Management under Parts Management"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Parts Management", "Warehouse Management","Inventory Analysis"], "testStepDescription" : "Click on Inventory Analysis"}}]},
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Parts Management", "Warehouse Management","Inventory Analysis","Inventory Valuation"], "testStepDescription" : "Click on Inventory Valuation"}}]},
+					{"clickElement" : [{"SubMenuItemsubChild":{"xpathparams": ["Parts Management", "Warehouse Management","Inventory Analysis","Inventory Valuation","Inventory Receipt Transactions"], "testStepDescription" : "Click on Inventory Receipt Transactions"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Inventory Receipt Transactions"], "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{ "save": { "varName": "ptr","object":"orderedQunatity", "assign" : "0", "testStepDescription" : "Save line items to object"}}
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_013",
+				"testCaseTitle": "Get MAUC for the items",
+				"testCaseDescription": "Get MAUC for the items",
+				"dependsOn": "PSI_012",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Inventory Receipt Transactions"], "testStepDescription" : "Click on Inventory Receipt Transactions tab"}}]},
+					{"clickElement" : [{"searchButton":{"xpathparams": ["Inventory Receipt Transactions"], "testStepDescription" : "Click on serach button on the header"}}]},
+					{"clickElement" : [{"inventoryTransactionInputSearch":{"xpathparams": [], "testStepDescription" : "Click on item input"}}]},
+					{"typeTextWithTabKey" : [{"inventoryTransactionInput":{"xpathparams": [], "value" : "orderedQunatity","ptr":"#ptr", "testStepDescription" : "Enter item name"}}]},
+					{"clickElement" : [{"windowFirstRowCheckBox":{"xpathparams": [], "tesStepDescription": "Click on check box"}}]},
+					{"clickElement" : [{"labelwithTextIndex":{"xpathparams": ["OK","2"], "testStepDescription" : "Click on OK"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["OK"], "testStepDescription" : "Click on OK"}}]},
+					{"clickLastElement" : [{"inventoryTransactionCheckBox":{"xpathparams": [], "testStepDescription" : "Click on last checkbox"}}]},
+					{"clickElement" : [{"buttonMenuHeadres":{"xpathparams": ["Inventory Receipt Transactions","Actions"], "testStepDescription" : "Click on Actions"}}]},
+					{"clickElement" : [{"buttonMenuItemUnderActions":{"xpathparams": ["Inventory Receipt Transaction Cost Details"], "testStepDescription" : "Click on Inventory Receipt Transaction Cost Details Menu"}}]},
+					{"addElementsToList" : [{"mauCost":{"xpathparams": [],"varName":"ptr","object":"maucCost","lineItems":"validItem", "testStepDescription" : "Get the integration transaction amounts"}}]}
+					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_014",
+				"testCaseTitle": "Loop through items and store MAUC",
+				"testCaseDescription": "Loop through items and store MAUC",
+				"dependsOn": "PSI_013",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{ "save": { "varName": "ptr", "assign" : "inc", "testStepDescription" : "Save line items to object"}},
+					{"loop" : {"loop" : { "from":"PSI_013", "to":"PSI_014", "object" : "orderedQunatity","varName": "ptr"}, "testStepDescription" : "Loop through test cases"}}
+					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_015",
+				"testCaseTitle": "Calculate the Cost Amount Using the MAUC Costs",
+				"testCaseDescription": "Calculate the Cost Amount Using the MAUC Costs",
+				"dependsOn": "PSI_014",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{ "calculateCostAmount": { "varName": "quantity","object":"maucCost", "total" : "costAmounts", "testStepDescription" : "Calculate the cost amounts"}},
+					{"clickElement" : [{"buttonSaveAndExit":{"xpathparams": ["Inventory Receipt Transaction Cost Details"], "testStepDescription" : "Click on button save and exit"}}]},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Inventory Receipt Transactions"], "testStepDescription" : "Click on Inventory Receipt Transactions tab"}}]},
+					{"clickElement" : [{"buttonSaveAndExit":{"xpathparams": ["Inventory Receipt Transactions"], "testStepDescription" : "Click on button save and exit"}}]},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on Integration Transactions by Project/Order tab"}}]},
+					{ "validate": 
+						[ 
+							{ "compareListItems":
+								[
+									{"sessionTab":{"xpathparams":["Inventory Receipt Transactions"],"objects":"integrationTransactionAmount,costAmounts", "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					}
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_016",
+				"testCaseTitle": "Print Sales Invoice",
+				"testCaseDescription": "Print Sales Invoice",
+				"dependsOn": "PSI_015",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Part Sales Orders"], "testStepDescription" : "Click on Part Sales Orders tab"}}]},
+					{"clickElement" : [{"salesInvoiceButton":{"xpathparams": [], "testStepDescription" : "Click on button save and exit"}}]},
+					{"typeTextWithTabKey" : [{"devicen1":{"xpathparams": [], "value" : "D","testStepDescription":"Enter the value D in the Device text box"}}]},
+					{"clickElement" : [{"continueBtn":{"xpathparams": [],"testStepDescription":"Click on Continue button"}}]},
+					{"clickElement" : [{"popUpMenubutton":{"xpathparams": ["Payment Details","Actions"],"testStepDescription":"Click on Actions"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["Process Invoice"], "testStepDescription" : "Click on OK"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Part Invoice (Variant Report)"], "continueTestNodes" : false, "testStepDescription" : "Validate Part Invoice (Variant Report) Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{"savePDF" : [{"labelwithText":{"xpathparams": ["Continue"], "by" : "id", "frame": "nocode-file-frame", "fileName": "partSalesInvoice","testStepDescription":"Save PDF"}}]},
+					{"clickElement" : [{"SessionTabClose":{"xpathparams": ["Part Invoice (Variant Report)"], "testStepDescription" : "Click on close Part Invoice (Variant Report) pdf"}}]}
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_017",
+				"testCaseTitle": "Compare the cost of goods sold",
+				"testCaseDescription": "Compare the cost of goods sold",
+				"dependsOn": "PSI_016",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on Integration Transactions by Project/Order tab"}}]},
+					{"clickElement" : [{"refresh":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on refresh"}}]},
+					{"clickElement" : [{"financialTRansactionDropDown":{"xpathparams": [], "testStepDescription" : "Click on Financial Transaction"}}]},
+					{"clickLastElement" : [{"labelwithText":{"xpathparams": ["Cost of Goods Sold"], "testStepDescription" : "Click on Cost of Goods Sold"}}]},
+					{"addElementsToArray" : [{"integrationTransactionAmount":{"xpathparams": [],"varName":"validItem","object":"costOfGoodsSold","alternate":"yes", "testStepDescription" : "Get the cost of goods sold amounts"}}]},
+					{ "validate": 
+						[ 
+							{ "compareListItems":
+								[
+									{"sessionTab":{"xpathparams":["Inventory Receipt Transactions"],"objects":"costOfGoodsSold,costAmounts", "continueTestNodes" : false, "testStepDescription" : "Compare costs of goods sold"}}									
+								]
+							}
+						]
+					}
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_018",
+				"testCaseTitle": "Get Revenue Analysis Costs",
+				"testCaseDescription": "Get Revenue Analysis Costs",
+				"dependsOn": "PSI_017",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on Integration Transactions by Project/Order tab"}}]},
+					{"clickElement" : [{"financialTRansactionDiv":{"xpathparams": [], "testStepDescription" : "Click on financial transactions input"}}]},
+					{"textClearInputs" : [{"financialTRansactionInput":{"xpathparams": [],"testStepDescription" : "Clear the inputs"}}]},
+					{"typeText" : [{"financialTRansactionInput":{"xpathparams": [],"value":"Revenues Analysis","testStepDescription":"Select the order type for Purchase Order"}}]},
+					{"clickLastElement" : [{"labelwithText":{"xpathparams": ["Revenues Analysis"], "testStepDescription" : "Click on Revenues Analysis"}}]},
+					{"addElementsToArray" : [{"integrationTransactionAmount":{"xpathparams": [],"varName":"validItem","object":"revenueAnalysis","alternate":"yes", "testStepDescription" : "Get the cost of goods sold amounts"}}]}
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_019",
+				"testCaseTitle": "Get Revenue Analysis Costs and Shipped Quantity and compare",
+				"testCaseDescription": "Get Revenue Analysis Costs and compare",
+				"dependsOn": "PSI_018",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Part Sales Orders"], "testStepDescription" : "Click on Integration Transactions by Project/Order tab"}}]},
+					{ "sleep": { "sec":"2000"}},
+					{"addElementsToArray" : [{"firmPrice":{"xpathparams": [],"varName":"validItem","object":"firmAmount","alternate":"no", "testStepDescription" : "Get the firm cost"}}]},
+					{"addElementsToArray" : [{"shippedQty":{"xpathparams": [],"varName":"validItem","object":"shippedQty","alternate":"no", "testStepDescription" : "Get the shipped quantity"}}]},
+					{ "calculateCostAmount": { "varName": "quantity","objects":"firmAmount,shippedQty", "total" : "firmCostAmounts", "testStepDescription" : "Calculate the cost amounts"}},
+					{ "validate": 
+						[ 
+							{ "compareList":
+								[
+									{"sessionTab":{"xpathparams":["Inventory Receipt Transactions"],"objects":"firmCostAmounts,revenueAnalysis", "continueTestNodes" : false, "testStepDescription" : "Compare revenues analysis cost and the firm and shipped quantity cost"}}									
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_020",
+				"testCaseTitle": "Naviagte to Sales and Warehouse Order Invoice Lines",
+				"testCaseDescription": "Naviagte to Sales and Warehouse Order Invoice Lines",
+				"dependsOn": "PSI_019",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Parts Management", "Warehouse Management","Inventory Analysis","Inventory Valuation"], "testStepDescription" : "Click on Inventory Valuation"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Parts Management", "Warehouse Management","Inventory Analysis"], "testStepDescription" : "Click on Inventory Analysis"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Parts Management", "Warehouse Management"], "testStepDescription" : "Click on Warehouse Management under Parts Management"}}]},
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Parts Management"], "testStepDescription" : "Click on Parts Management Menu"}}]},
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Parts Management"], "testStepDescription" : "Click on Parts Management Menu"}}]},
+					
+					{"clickElement" : [{"menuItem":{"xpathparams": ["Central Invoicing"], "testStepDescription" : "Click on Central Invoicing"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Central Invoicing", "Invoicing Data"], "testStepDescription" : "Click on Invoicing Data"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Central Invoicing", "Invoicing Data","Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on Sales and Warehouse Order Invoice Lines"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Sales and Warehouse Order Invoice Lines"], "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"searchButton":{"xpathparams": ["Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on serach button on the header"}}]},
+					{"clickElement" : [{"sourceCompany":{"xpathparams": ["Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on serach button on the header"}}]},
+					{"typeTextWithTabKey" : [{"sourceCompany":{"xpathparams": [], "value" : "$company","testStepDescription":"Enter company"}}]},
+					{"clickElement" : [{"salesOrderNumber":{"xpathparams": [], "testStepDescription" : "Click on order number input"}}]},
+					{"typeTextWithTabKey" : [{"salesOrderNumber":{"xpathparams": [], "value" : "#salesOrderNumber","testStepDescription":"Enter the value D in the Device text box"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["OK"], "testStepDescription" : "Click on OK"}}]},
+					{ "save": { "varName": "ptr","object":"orderedQunatity", "assign" : "0", "testStepDescription" : "Save line items to object"}}
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_021",
+				"testCaseTitle": "Get the Invoice Amount and Tax Amount",
+				"testCaseDescription": "Get the Invoice Amount and Tax Amount",
+				"dependsOn": "PSI_010",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on serach button on the header"}}]},
+					{"clickElement" : [{"salesAndWarehouseArrow":{"xpathparams": ["#ptr"], "testStepDescription" : "Click on line arrow button"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTabwithIndex":{"xpathparams":["Sales and Warehouse Order Invoice Lines","2"], "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["Invoice Related"], "testStepDescription" : "Click on Invoice Related Tab"}}]},
+					{ "readTaxData": { "objects":"actualInvoiceAmount,actualTaxAmount","testStepDescription" : "Save invoice amount and tax amount"}},
+					{"clickLastElement" : [{"buttonSaveAndExit":{"xpathparams": ["Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on button save and exit"}}]}
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_022",
+				"testCaseTitle": "Loop through items and store Amounts",
+				"testCaseDescription": "Loop through items and store Amounts",
+				"dependsOn": "PSI_021",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{ "save": { "varName": "ptr", "assign" : "inc", "testStepDescription" : "Save line items to object"}},
+					{"loop" : {"loop" : { "from":"PSI_021", "to":"PSI_022", "object" : "orderedQunatity","varName": "ptr"}, "testStepDescription" : "Loop through test cases"}}
+					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_023",
+				"testCaseTitle": "Compare the amounts",
+				"testCaseDescription": "Compare the amounts",
+				"dependsOn": "PSI_022",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{ "compareTaxData": { "object": "firmCostAmounts","objects":"actualInvoiceAmount,actualTaxAmount","taxtotal":"expectedTaxTotal","testStepDescription" : "Calculate the tax amounts"}}
+					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_024",
+				"testCaseTitle": "Navigate to Post Integration Transactions to Finance Transactions",
+				"testCaseDescription": "Navigate to Post Integration Transactions to Finance Transactions",
+				"dependsOn": "PSI_023",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+                    {"clickElement" : [{"subMenuItem":{"xpathparams": ["Central Invoicing", "Invoicing Data"], "testStepDescription" : "Click on Invoicing Data"}}]},
+                    {"clickElement" : [{"menuItem":{"xpathparams": ["Central Invoicing"], "testStepDescription" : "Click on Central Invoicing"}}]},
+                    
+                    {"clickElement" : [{"menuItem":{"xpathparams": ["Finance & Accounting"], "testStepDescription" : "Click on Finance & Accounting Menu"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"subMenuItem":{"xpathparams":["Finance & Accounting", "Integration with Other Modules"], "continueTestNodes" : false, "testStepDescription" : "Validate Integration with Other Modules is visible"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules"], "testStepDescription" : "Click on Integration with Other Modules"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules","Integration Setup"], "testStepDescription" : "Click on Integration Setuo"}}]},
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules","Integration Setup","Post Integration Transactions to Finance Transactions"], "testStepDescription" : "Click on Post Integration Transactions to Finance Transactions"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Post Integration Transactions to Finance Transactions"], "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					}					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_025",
+				"testCaseTitle": "Post the Part Sales Order",
+				"testCaseDescription": "Post the Part Sales Order",
+				"dependsOn": "PSI_024",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+                    {"clickElement" : [{"sessionTab":{"xpathparams": ["Post Integration Transactions to Finance Transactions"], "testStepDescription" : "Click on Post Integration Transactions to Finance Transactions"}}]},
+                    {"clickElement" : [{"postFinancialTransactionDropDown":{"xpathparams": [], "testStepDescription" : "Click on financial transaction drop down"}}]},
+                    {"clickLastElement" : [{"labelwithText2":{"xpathparams": ["Parts (Sales)"], "testStepDescription" : "Click on Part (Sales)"}}]},
+                    {"typeTextWithTabKey" : [{"transLogDate":{"xpathparams": [], "value" : "#date", "days" : "$logFromTransDate", "dateFormat" : "$dateFormat" , "varName" : "actualplannedDeliveryDate","testStepDescription" : "Change planned Delivery Date"}}]},
+                    {"typeTextWithTabKey" : [{"transLogDate1":{"xpathparams": [], "value" : "#date", "days" : "$logToTransDate", "dateFormat" : "$dateFormat" , "varName" : "actualplannedDeliveryDate","testStepDescription" : "Change planned Delivery Date"}}]},
+                    {"clickElement" : [{"labelwithText":{"xpathparams": ["Post"], "testStepDescription" : "Click on Post"}}]},
+                    { "sleep": { "sec":"5000"}},
+                    {"clickElement" : [{"sessionTab":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on Integration Transactions by Project/Order"}}]},
+					{"clickElement" : [{"refresh":{"xpathparams": ["Integration Transactions by Project/Order"], "testStepDescription" : "Click on refresh"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"labelwithText1":{"xpathparams":["Posted"], "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					}					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_026",
+				"testCaseTitle": "Navigate to Finalization Run Numbers",
+				"testCaseDescription": "Navigate to Finalization Run Numbers",
+				"dependsOn": "PSI_025",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules","Integration Setup"], "testStepDescription" : "Click on Integration Setuo"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Finance & Accounting", "Integration with Other Modules"], "testStepDescription" : "Click on Integration with Other Modules"}}]},
+					{"clickElement" : [{"subMenuItem":{"xpathparams": ["Finance & Accounting", "General Ledger"], "testStepDescription" : "Click on General Ledger"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Transactions"], "testStepDescription" : "Click on G/L Transactions"}}]},
+                    {"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Transactions","Batch Finalization"], "testStepDescription" : "Click on Batch Finalization"}}]},
+                    {"clickElement" : [{"SubMenuItemsubChild":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Transactions","Batch Finalization","Finalization Run Numbers"], "testStepDescription" : "Click on Finalization Run Numbers"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTab":{"xpathparams":["Finalization Run Numbers"], "continueTestNodes" : false, "testStepDescription" : "Validate Finalization Run Numbers Tab is displayed"}}									
+								]
+							}
+						]
+					}					
+					
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_027",
+				"testCaseTitle": "Navigate to Finalization Run Numbers",
+				"testCaseDescription": "Navigate to Finalization Run Numbers",
+				"dependsOn": "PSI_026",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Finalization Run Numbers"], "testStepDescription" : "Click on Finalization Run Numbers"}}]},
+					{"clickElement" : [{"newFinalizationRun":{"xpathparams": [], "testStepDescription" : "Click on new button"}}]},
+					{"clickElement" : [{"buttonMenuHeadres":{"xpathparams": ["Finalization Run Number", "Actions"], "testStepDescription" : "Click on Actions"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["Select Batches..."], "testStepDescription" : "Click on Select Batches"}}]},
+					{"typeTextWithTabKey" : [{"batchRefernceFilter":{"xpathparams": [], "value" : "Sales Invoices from SLI", "ignore" : "yes", "waitTime" : "2","testStepDescription":"Enter the value D in the Device text box"}}]},
+					{"clickElement" : [{"selectRange":{"xpathparams": [], "testStepDescription" : "Click on selection range"}}]},
+                    {"clickElement" : [{"buttonMenuHeadres":{"xpathparams": ["Select Batches for Finalization", "Actions"], "testStepDescription" : "Click on Actions"}}]},
+                    {"clickElement" : [{"fianlizeButton":{"xpathparams": [], "testStepDescription" : "Click on Finalize batch"}}]},
+					{"typeTextWithTabKey" : [{"devicen1":{"xpathparams": [], "value" : "$device", "ignore" : "yes", "waitTime" : "2","testStepDescription":"Enter the value D in the Device text box"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["Continue"], "ignore" : "yes", "waitTime" : "2","testStepDescription":"Click on Continue"}}]},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Journal Report by Transaction Category"], "testStepDescription" : "Click on Journal Report by Transaction Category"}}]},
+					{"savePDF" : [{"labelwithText":{"xpathparams": ["Continue"], "by" : "id", "frame": "nocode-file-frame", "fileName": "JournalReportbyTransactionCategory","testStepDescription":"Save PDF"}}]},
+					{"clickElement" : [{"SessionTabClose":{"xpathparams": ["Journal Report by Transaction Category"], "testStepDescription" : "Click on close Journal Report by Transaction Category pdf"}}]},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Journal Report (Totals by Ledger Account)"], "testStepDescription" : "Click on Journal Report by Transaction Category"}}]},
+					{"savePDF" : [{"labelwithText":{"xpathparams": ["Continue"], "by" : "id", "frame": "nocode-file-frame", "fileName": "JournalReport(TotalsbyLedgerAccount)","testStepDescription":"Save PDF"}}]},
+					{"clickElement" : [{"SessionTabClose":{"xpathparams": ["Journal Report (Totals by Ledger Account)"], "testStepDescription" : "Click on close Journal Report (Totals by Ledger Account) pdf"}}]},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Finalization Status"], "testStepDescription" : "Click on Finalization Status"}}]},
+					{"savePDF" : [{"labelwithText":{"xpathparams": ["Continue"], "by" : "id", "frame": "nocode-file-frame", "fileName": "FinalizationStatus","testStepDescription":"Save PDF"}}]},
+					{"clickElement" : [{"SessionTabClose":{"xpathparams": ["Finalization Status"], "testStepDescription" : "Click on close Finalization Status pdf"}}]},
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"labelwithText":{"xpathparams":["Finalized successfully"], "continueTestNodes" : true, "testStepDescription" : "Validate Finalized Status is displayed"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on Finalization Run Numbers"}}]},
+					{"clickElement" : [{"salesAndWarehouseArrow":{"xpathparams": ["0"], "testStepDescription" : "Click on first Line"}}]},					
+					{ "validate": 
+						[ 
+							{ "isElementPresent":
+								[
+									{"sessionTabwithIndex":{"xpathparams":["Sales and Warehouse Order Invoice Lines","2"], "continueTestNodes" : false, "testStepDescription" : "Validate Inventory Receipt Transactions Tab is displayed"}}									
+								]
+							}
+						]
+					},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["Invoice Related"], "testStepDescription" : "Click on Invoice Related Tab"}}]},
+					{"getText": [{"finalizeRunNumber":{"xpathparams": [], "varName" : "runNumber","testStepDescription":"Get the run Number"}}]},
+					{"clickLastElement" : [{"buttonSaveAndExit":{"xpathparams": ["Sales and Warehouse Order Invoice Lines"], "testStepDescription" : "Click on button save and exit"}}]}
+					
+					
+				]
+			}
+		},
+		{
+			"testNode": {
+				"testCaseID": "PSI_028",
+				"testCaseTitle": "Navigate to Finalization Run Numbers",
+				"testCaseDescription": "Navigate to Finalization Run Numbers",
+				"dependsOn": "PSI_027",
+				"tags":["SmokeTest","PSI","NegativeTest"],
+				"priority":"P1",
+				"testCaseSteps": [
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Transactions","Batch Finalization"], "testStepDescription" : "Click on Batch Finalization"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Transactions"], "testStepDescription" : "Click on G/L Transactions"}}]},
+					{"clickElement" : [{"subMenuItems":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Inquiries"], "testStepDescription" : "Click on G/L Inquiries"}}]},
+					{"clickElement" : [{"subMenuItemChild":{"xpathparams": ["Finance & Accounting", "General Ledger","G/L Inquiries","Document History"], "testStepDescription" : "Click on Document History"}}]},
+					{"clickElement" : [{"sessionTab":{"xpathparams": ["Document History"], "testStepDescription" : "Click on Document History"}}]},
+					{"clickElement" : [{"searchButton":{"xpathparams": ["Document History"], "testStepDescription" : "Click on serach button on the header"}}]},
+					{"typeTextWithTabKey" : [{"documentTransactionType":{"xpathparams": [], "value" : "SIP","testStepDescription":"Enter the value D in the Device text box"}}]},
+					{"clickElement" : [{"labelwithText":{"xpathparams": ["OK"], "testStepDescription" : "Click on OK button"}}]},
+					{"clickElement" : [{"inputBatchFilter":{"xpathparams": [], "testStepDescription" : "Click on batch filter input"}}]},
+					{"typeTextWithTabKey" : [{"inputBatchFilter":{"xpathparams": [], "value" : "#runNumber","testStepDescription":"Enter the run number"}}]},
+					{"clickElement" : [{"documentHistoryCheckBox":{"xpathparams": ["0"], "testStepDescription" : "Click on selection range"}}]},
+					{"getText": [{"totalTAmMount":{"xpathparams": [], "varName" : "actualTaxTotal","testStepDescription":"Get the actual tax total"}}]},
+					{"compareString": { "actual":"actualTaxTotal" ,"expected":"expectedTaxTotal","testStepDescription":"Compare the tax"}}
+					
+					
+				]
+			}
+		}
+		
+		
+]
+}
+		
